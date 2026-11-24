@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Ferramentas internas | DuoForm3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Montserrat,system-ui,sans-serif;background:#0c0712;color:#f4effa;padding:20px;line-height:1.5}
+.w{max-width:720px;margin:auto;display:flex;flex-direction:column;gap:22px}
+h1{font-size:22px;font-weight:800}
+h2{font-size:17px;font-weight:800;margin-bottom:4px}
+p.s{color:#b7a8cc;font-size:13.5px}
+.box{background:#1a0f29;border:1px solid #2e1d45;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}
+label{font-size:12px;font-weight:700;color:#c78bff;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px}
+input,textarea,select{width:100%;padding:11px 13px;border-radius:11px;border:1px solid #2e1d45;background:#0f0818;color:#fff;font:inherit;font-size:15px}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{padding:14px;border-radius:12px;border:0;font:inherit;font-weight:800;color:#fff;background:linear-gradient(100deg,#7b1fd1,#f05bff);cursor:pointer}
+pre{background:#0f0818;border:1px dashed #6d2bb0;border-radius:12px;padding:14px;font-size:12.5px;white-space:pre-wrap;word-break:break-word;color:#e5b3ff}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.res div{background:#0f0818;border-radius:12px;padding:12px}
+.res small{display:block;color:#b7a8cc;font-size:12px}
+.res b{font-size:19px}
+.res .big{grid-column:1/-1;background:linear-gradient(100deg,#7b1fd1,#b02cf5)}
+.res .big small{color:#f2dcff}
+a{color:#e5b3ff}
+</style>
+</head>
+<body>
+<div class="w">
+  <div><h1>Ferramentas internas DuoForm3D</h1>
+  <p class="s">Esta página não aparece no catálogo. Use para calcular preços e gerar produtos novos. <a href="./">← Voltar ao catálogo</a></p></div>
+
+  <!-- CALCULADORA -->
+  <div class="box">
+    <div><h2>1. Calculadora de custo e preço</h2>
+    <p class="s">Preencha com os dados do Bambu Studio (peso e tempo aparecem depois de fatiar). Nada fica salvo nem aparece no site.</p></div>
+    <div class="duas">
+      <div><label>Peso da peça (g)</label><input id="g" type="number" inputmode="decimal" value="30"></div>
+      <div><label>Preço do rolo de 1 kg (R$)</label><input id="kg" type="number" inputmode="decimal" value="90"></div>
+      <div><label>Tempo de impressão (horas)</label><input id="h" type="number" inputmode="decimal" value="2"></div>
+      <div><label>Energia + desgaste por hora (R$)</label><input id="eh" type="number" inputmode="decimal" value="1"></div>
+      <div><label>Extras: argola, embalagem… (R$)</label><input id="ex" type="number" inputmode="decimal" value="1.5"></div>
+      <div><label>Perda/troca de cor (%)</label><input id="pd" type="number" inputmode="decimal" value="15"></div>
+      <div><label>Multiplicador de lucro</label>
+        <select id="mu"><option value="2">2× (preço baixo)</option><option value="2.5">2,5×</option><option value="3" selected>3× (recomendado p/ personalizado)</option><option value="4">4×</option></select></div>
+      <div><label>Quantidade</label><input id="q" type="number" inputmode="numeric" value="1"></div>
+    </div>
+    <div class="res">
+      <div><small>Material gasto</small><b id="rMat"></b></div>
+      <div><small>Custo de 1 unidade</small><b id="rCusto"></b></div>
+      <div class="big"><small>Preço sugerido por unidade</small><b id="rPreco"></b></div>
+      <div><small>Total do pedido</small><b id="rTot"></b></div>
+      <div><small>Lucro do pedido</small><b id="rLucro"></b></div>
+    </div>
+  </div>
+
+  <!-- GERADOR -->
+  <div class="box">
+    <div><h2>2. Gerador de produto novo</h2>
+    <p class="s">Preencha, toque em <b>Gerar</b>, copie o bloco e cole no arquivo <b>produtos.js</b> no GitHub, logo abaixo da linha <code>const PRODUTOS = [</code>. O passo a passo completo está no guia.</p></div>
+    <div class="duas">
+      <div><label>Código (ex.: CH02)</label><input id="pc"></div>
+      <div><label>Categoria</label><input id="pcat" placeholder="Chaveiros"></div>
+    </div>
+    <div><label>Nome do produto</label><input id="pn"></div>
+    <div class="duas">
+      <div><label>Preço (0 = sob consulta)</label><input id="pp" type="number" inputmode="decimal" value="0"></div>
+      <div><label>Mostrar "a partir de"?</label><select id="pa"><option value="false">Não</option><option value="true">Sim</option></select></div>
+    </div>
+    <div><label>Fotos (nomes dos arquivos, separados por vírgula)</label><input id="pf" placeholder="chaveiro-azul.jpg, chaveiro-azul-2.jpg"></div>
+    <div><label>Descrição</label><textarea id="pd2" rows="3"></textarea></div>
+    <div><label>Cores (separadas por vírgula, ou vazio)</label><input id="pco" placeholder="Rosa, Branco, Dourado"></div>
+    <div><label>Pergunta de personalização (ou vazio)</label><input id="ppe" placeholder="Nome que vai na peça"></div>
+    <div><label>Selo "Mais pedido"?</label><select id="pde"><option value="false">Não</option><option value="true">Sim</option></select></div>
+    <button id="gerar">Gerar bloco do produto</button>
+    <pre id="saida">O bloco aparece aqui.</pre>
+    <button id="copiar">Copiar bloco</button>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s),brl=v=>isFinite(v)?v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}):"—",n=id=>parseFloat($(id).value)||0;
+function calc(){
+  const g=n("#g")*(1+n("#pd")/100), mat=g/1000*n("#kg"), custo=mat+n("#h")*n("#eh")+n("#ex");
+  const preco=Math.ceil(custo*n("#mu"))-0.1, q=Math.max(1,n("#q"));
+  $("#rMat").textContent=g.toFixed(0)+" g · "+brl(mat);
+  $("#rCusto").textContent=brl(custo); $("#rPreco").textContent=brl(preco);
+  $("#rTot").textContent=brl(preco*q); $("#rLucro").textContent=brl((preco-custo)*q);
+}
+document.querySelectorAll(".box:first-of-type input,.box:first-of-type select").forEach(e=>e.oninput=calc);calc();
+const lista=v=>JSON.stringify(v.split(",").map(s=>s.trim()).filter(Boolean));
+$("#gerar").onclick=()=>{
+  $("#saida").textContent=`  {
+    codigo: ${JSON.stringify($("#pc").value.trim())},
+    nome: ${JSON.stringify($("#pn").value.trim())},
+    categoria: ${JSON.stringify($("#pcat").value.trim()||"Outros")},
+    preco: ${n("#pp")},
+    aPartirDe: ${$("#pa").value},
+    fotos: ${lista($("#pf").value)},
+    descricao: ${JSON.stringify($("#pd2").value.trim())},
+    cores: ${lista($("#pco").value)},
+    personalizar: ${JSON.stringify($("#ppe").value.trim())},
+    destaque: ${$("#pde").value}
+  },`;
+};
+$("#copiar").onclick=async()=>{try{await navigator.clipboard.writeText($("#saida").textContent);$("#copiar").textContent="Copiado ✓"}catch(e){$("#copiar").textContent="Selecione o texto e copie manualmente"}setTimeout(()=>$("#copiar").textContent="Copiar bloco",2000)};
+</script>
+</body>
+</html>
